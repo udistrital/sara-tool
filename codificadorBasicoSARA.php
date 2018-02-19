@@ -33,14 +33,14 @@ class Encriptador
     }
 
     function codificar_viejo($cadena) { /* reemplaza valores + / */
-  		$cadena = rtrim ( strtr ( AesCtr::encrypt ( $cadena, "", 256 ), '+/', '-_' ), '=' );
-  		return $cadena;
-  	}
+        $cadena = rtrim ( strtr ( AesCtr::encrypt ( $cadena, "", 256 ), '+/', '-_' ), '=' );
+        return $cadena;
+    }
 
-  	function decodificar_viejo($cadena) { /* reemplaza valores + / */
-  		$cadena = AesCtr::decrypt ( str_pad ( strtr ( $cadena, '-_', '+/' ), strlen ( $cadena ) % 4, '=', STR_PAD_RIGHT ), "", 256 );
-  		return $cadena;
-  	}
+    function decodificar_viejo($cadena) { /* reemplaza valores + / */
+        $cadena = AesCtr::decrypt ( str_pad ( strtr ( $cadena, '-_', '+/' ), strlen ( $cadena ) % 4, '=', STR_PAD_RIGHT ), "", 256 );
+        return $cadena;
+    }
 
     public function codificar_nuevo($cadena)
     {
@@ -145,8 +145,10 @@ function non_block_read($fd, &$data)
 
 $accion = isset($argv[1]) ? $argv[1] : '';
 if ($accion == '-h' || $accion == '--help' || $accion == '') {
-    echo 'php '.$argv[0].' <codificar o decodificar> <nuevo o viejo (version SARA)> <semilla>'."\n";
+    echo 'php '.$argv[0].' <codificar o decodificar, clave> <nuevo o viejo (version SARA)> <semilla>'."\n";
     exit();
+} elseif ($accion == '-p' || $accion == '--pass') {
+    $funcion = 'codificarClave';
 }
 
 $accion = (strtoupper($accion[0]) == 'C') ? 'codificar' : 'decodificar';
@@ -157,7 +159,11 @@ $semilla = isset($argv[3]) ? $argv[3] : '';
 
 $enc = new Encriptador($semilla);
 
-echo 'Inserte lineas a '.$accion.':'.PHP_EOL;
+if (isset($funcion)) {
+    echo 'Inserte lineas a procesar:'.PHP_EOL;
+} else {
+    echo 'Inserte lineas a '.$accion.':'.PHP_EOL;
+}
 
 $linea = '';
 while (1) {
@@ -170,7 +176,11 @@ while (1) {
             echo PHP_EOL;
             foreach ($lineas as $l) {
                 if ($l != '') {
-                    echo $enc->{$accion.'_'.$version}($l).PHP_EOL;
+                    if (isset($funcion)){
+			echo $enc->{$funcion}($l).PHP_EOL;
+		    } else {
+                        echo $enc->{$accion.'_'.$version}($l).PHP_EOL;
+                    }
                 }
             }
             echo PHP_EOL;
