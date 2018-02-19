@@ -145,7 +145,10 @@ function non_block_read($fd, &$data)
 
 $accion = isset($argv[1]) ? $argv[1] : '';
 if ($accion == '-h' || $accion == '--help' || $accion == '') {
-    echo 'php '.$argv[0].' <codificar o decodificar, clave> <nuevo o viejo (version SARA)> <semilla>'."\n";
+    echo 'php '.$argv[0].' <codificar o decodificar> <nuevo o viejo (version SARA)> <semilla>'."\n";
+    echo "\n\nOtras Opciones:\n";
+    echo "    -p, --pass        para cifrar password.\n";
+    echo "\nUse ctrl+c para salir del modo inserción de líneas.\n";
     exit();
 } elseif ($accion == '-p' || $accion == '--pass') {
     $funcion = 'codificarClave';
