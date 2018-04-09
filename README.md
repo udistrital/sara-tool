@@ -8,3 +8,5 @@ https://github.com/secondtruth/php-phar-compiler
 ```
 ./codificadorBasicoSARA.php
 ```
+
+[![asciicast](https://asciinema.org/a/O1rUX6AyeQxtmyfkv1tDSEhwS.png)](https://asciinema.org/a/O1rUX6AyeQxtmyfkv1tDSEhwS)
