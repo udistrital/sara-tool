@@ -168,6 +168,8 @@ if (isset($funcion)) {
     echo 'Inserte lineas a '.$accion.':'.PHP_EOL;
 }
 
+echo 'Usando key: '.$semilla.PHP_EOL;
+
 $linea = '';
 while (1) {
     $char = '';

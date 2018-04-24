@@ -4,4 +4,6 @@ then
 docker build -t sara-tool .
 fi
 # https://github.com/moby/moby/issues/2838
-docker run -ti --rm sara-tool /bin/sh -c "php /root/codificadorBasicoSARA.php $@"
+COMMAND='php /root/codificadorBasicoSARA.php '$@
+echo "Ejecutando: $COMMAND"
+docker run -ti --rm sara-tool /bin/sh -c "$COMMAND"
