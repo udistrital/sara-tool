@@ -170,26 +170,16 @@ if (isset($funcion)) {
 
 echo 'Usando key: '.$semilla.PHP_EOL;
 
-$linea = '';
-while (1) {
-    $char = '';
-    if (non_block_read(STDIN, $char)) {
-        $linea .= $char;
-    } else {
-        if ($linea != '') {
-            $lineas = explode("\n", $linea);
-            echo PHP_EOL;
-            foreach ($lineas as $l) {
-                if ($l != '') {
-                    if (isset($funcion)){
-			echo $enc->{$funcion}($l).PHP_EOL;
-		    } else {
-                        echo $enc->{$accion.'_'.$version}($l).PHP_EOL;
-                    }
-                }
+while($linea = fgets(STDIN)){
+    echo PHP_EOL;
+    $lineas = explode("\n", $linea);
+    foreach ($lineas as $l) {
+        if ($l != '') {
+            if (isset($funcion)){
+                echo $enc->{$funcion}($l);
+            } else {
+                echo $enc->{$accion.'_'.$version}($l);
             }
-            echo PHP_EOL;
-            $linea = '';
         }
     }
 }
