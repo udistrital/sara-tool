@@ -5,7 +5,7 @@ RUN apk add --no-cache libmcrypt libmcrypt-dev bash
 
 RUN docker-php-ext-install mcrypt
 
-ADD ./ /root
-WORKDIR /root
+ADD ./ /opt/sara-tool
+WORKDIR /opt/sara-tool
 
 CMD php codificadorBasicoSARA.php

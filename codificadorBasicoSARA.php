@@ -170,17 +170,35 @@ if (isset($funcion)) {
 
 echo 'Usando key: '.$semilla.PHP_EOL;
 
-while($linea = fgets(STDIN)){
-    echo PHP_EOL;
-    $lineas = explode("\n", $linea);
-    foreach ($lineas as $l) {
-        if ($l != '') {
-            if (isset($funcion)){
-                echo $enc->{$funcion}($l);
-            } else {
-                echo $enc->{$accion.'_'.$version}($l);
-            }
-        }
+$time_start = microtime(true);
+$linea = '';
+$no_tiempo_humano = 0.01;
+system("stty -icanon");
+while($caracter = fread(STDIN, 1)){
+    $ascii = ord($caracter);
+    if ($ascii == 10) {//intro!
+      $time_end = microtime(true);
+      $time = $time_end - $time_start;
+      if ($time > $no_tiempo_humano) {
+          echo PHP_EOL;
+      }
+      $lineas = explode("\n", $linea);
+      foreach ($lineas as $l) {
+          if ($l != '') {
+              if (isset($funcion)){
+                  echo $enc->{$funcion}($l).PHP_EOL;
+              } else {
+                  echo $enc->{$accion.'_'.$version}($l).PHP_EOL;
+              }
+          }
+      }
+      if ($time > $no_tiempo_humano) {
+          echo PHP_EOL;
+      }
+      $linea = ''; // clean line
+    } else {
+      $linea .= $caracter;
     }
+    $time_start = microtime(true);
 }
 ?>
