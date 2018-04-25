@@ -170,11 +170,11 @@ if (isset($funcion)) {
 
 echo 'Usando key: '.$semilla.PHP_EOL;
 
+$no_tiempo_humano = 0.01;
 $time_start = microtime(true);
 $linea = '';
-$no_tiempo_humano = 0.01;
 system("stty -icanon");
-while($caracter = fread(STDIN, 1)){
+while( ($caracter = fread(STDIN, 1)) != -1){ // -1 if for "0" character breaks while!
     $ascii = ord($caracter);
     if ($ascii == 10) {//intro!
       $time_end = microtime(true);
